@@ -2,8 +2,7 @@
 #include <Wire.h>
  
 void setup(){
-    Wire.begin();    
- 
+    Wire.begin();   
     Serial.begin(9600);
     while (!Serial);
     Serial.println("\nI2C Scanner");

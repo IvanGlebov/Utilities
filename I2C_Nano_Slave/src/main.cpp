@@ -29,8 +29,6 @@ void loop() {
 String structFormPacket(packetData d1){
   String temp = "";
   double l, r;
-  // int lint, rint;
-  // char temp1[5] = "";
 
   // ID adding to string
   if(d1.id < 10) temp += "0" + String(d1.id);
@@ -45,19 +43,19 @@ String structFormPacket(packetData d1){
   r = airTemp - l; // right part of the nember
   r *= 100; // Convert r value to full integer
   r = int(r);
-  if(l < 10) temp += "0" + String(static_cast<int>(l)) /* + "/" */;
-  else if (l < 100) temp += String(static_cast<int>(l))/*  + "/" */;
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/*  + ";" */;
-  else if (r < 100)  temp += String(static_cast<int>(r))/*  + ";" */;
+  if(l < 10) temp += "0" + String(static_cast<int>(l));
+  else if (l < 100) temp += String(static_cast<int>(l));
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   // Air humidity adding to string
   l = int(d1.airHum);
   r = int((d1.airHum-l)*100);
-  if(l < 10) temp += "00" + String(static_cast<int>(l))/*  + "/" */;
-  else if (l < 100) temp += "0" + String(static_cast<int>(l))/*  + "/" */;
+  if(l < 10) temp += "00" + String(static_cast<int>(l));
+  else if (l < 100) temp += "0" + String(static_cast<int>(l));
   else if (l == 100) temp += "100/";
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/*  + ";" */;
-  else if (r < 100)  temp += String(static_cast<int>(r))/*  + ";" */;
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   //tempGround
   if(d1.groundTemp >= 0) temp += "+";
@@ -69,39 +67,38 @@ String structFormPacket(packetData d1){
   r *= 100; // Convert r value to full integer
   r = int(r);
   // temp += "T";
-  if(l < 10) temp += "0" + String(static_cast<int>(l))/*  + "/" */;
-  else if (l < 100) temp += String(static_cast<int>(l))/*  + "/" */;
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/*  + ";" */;
-  else if (r < 100)  temp += String(static_cast<int>(r))/*  + ";" */;
+  if(l < 10) temp += "0" + String(static_cast<int>(l));
+  else if (l < 100) temp += String(static_cast<int>(l));
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   // Ground humidity adding to string
   l = int(d1.groundHum);
   r = int((d1.groundHum-l)*100);
-  if(l < 10) temp += "00" + String(static_cast<int>(l))/*  + "/" */;
-  else if (l < 100) temp += "0" + String(static_cast<int>(l))/*  + "/" */;
-  else if (l == 100) temp += "100" /* / */;
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/*  + ";" */;
-  else if (r < 100)  temp += String(static_cast<int>(r))/*  + ";" */;
+  if(l < 10) temp += "00" + String(static_cast<int>(l));
+  else if (l < 100) temp += "0" + String(static_cast<int>(l));
+  else if (l == 100) temp += "100";
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   // Light level adding to string
   l = int(d1.lightLevel);
   r = int((d1.lightLevel-l)*100);
-  if(l < 10) temp += "000" + String(static_cast<int>(l))/* + "/"*/;
-  else if (l < 100) temp += "00" + String(static_cast<int>(l))/* + "/"*/;
-  else if (l < 1000) temp += "0" + String(static_cast<int>(l))/* + "/"*/;
-  else if (l < 10000) temp += String(static_cast<int>(l))/* + "/"*/;
+  if(l < 10) temp += "000" + String(static_cast<int>(l));
+  else if (l < 100) temp += "00" + String(static_cast<int>(l));
+  else if (l < 1000) temp += "0" + String(static_cast<int>(l));
+  else if (l < 10000) temp += String(static_cast<int>(l));
   else temp += "9999/";
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/* + ";"*/;
-  else if (r < 100)  temp += String(static_cast<int>(r))/* + ";"*/;
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   return temp;
 }
+// Old version with sending data right to function, not in the structure format
 String formPacket(int id, float tempAir, float humAir, float tempGround, float humGround, float lightLevel){
 
   String temp = "";
   double l, r;
-  // int lint, rint;
-  // char temp1[5] = "";
 
   // ID adding to string
   if(id < 10) temp += "0" + String(id);
@@ -116,19 +113,19 @@ String formPacket(int id, float tempAir, float humAir, float tempGround, float h
   r = airTemp - l; // right part of the nember
   r *= 100; // Convert r value to full integer
   r = int(r);
-  if(l < 10) temp += "0" + String(static_cast<int>(l)) /* + "/" */;
-  else if (l < 100) temp += String(static_cast<int>(l))/*  + "/" */;
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/*  + ";" */;
-  else if (r < 100)  temp += String(static_cast<int>(r))/*  + ";" */;
+  if(l < 10) temp += "0" + String(static_cast<int>(l));
+  else if (l < 100) temp += String(static_cast<int>(l));
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   // Air humidity adding to string
   l = int(humAir);
   r = int((humAir-l)*100);
-  if(l < 10) temp += "00" + String(static_cast<int>(l))/*  + "/" */;
-  else if (l < 100) temp += "0" + String(static_cast<int>(l))/*  + "/" */;
+  if(l < 10) temp += "00" + String(static_cast<int>(l));
+  else if (l < 100) temp += "0" + String(static_cast<int>(l));
   else if (l == 100) temp += "100/";
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/*  + ";" */;
-  else if (r < 100)  temp += String(static_cast<int>(r))/*  + ";" */;
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   //tempGround
   if(tempGround >= 0) temp += "+";
@@ -140,30 +137,30 @@ String formPacket(int id, float tempAir, float humAir, float tempGround, float h
   r *= 100; // Convert r value to full integer
   r = int(r);
   // temp += "T";
-  if(l < 10) temp += "0" + String(static_cast<int>(l))/*  + "/" */;
-  else if (l < 100) temp += String(static_cast<int>(l))/*  + "/" */;
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/*  + ";" */;
-  else if (r < 100)  temp += String(static_cast<int>(r))/*  + ";" */;
+  if(l < 10) temp += "0" + String(static_cast<int>(l));
+  else if (l < 100) temp += String(static_cast<int>(l));
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   // Ground humidity adding to string
   l = int(humGround);
   r = int((humGround-l)*100);
-  if(l < 10) temp += "00" + String(static_cast<int>(l))/*  + "/" */;
-  else if (l < 100) temp += "0" + String(static_cast<int>(l))/*  + "/" */;
-  else if (l == 100) temp += "100" /* / */;
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/*  + ";" */;
-  else if (r < 100)  temp += String(static_cast<int>(r))/*  + ";" */;
+  if(l < 10) temp += "00" + String(static_cast<int>(l));
+  else if (l < 100) temp += "0" + String(static_cast<int>(l));
+  else if (l == 100) temp += "100";
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   // Light level adding to string
   l = int(humGround);
   r = int((humGround-l)*100);
-  if(l < 10) temp += "000" + String(static_cast<int>(l))/* + "/"*/;
-  else if (l < 100) temp += "00" + String(static_cast<int>(l))/* + "/"*/;
-  else if (l < 1000) temp += "0" + String(static_cast<int>(l))/* + "/"*/;
-  else if (l < 10000) temp += String(static_cast<int>(l))/* + "/"*/;
+  if(l < 10) temp += "000" + String(static_cast<int>(l));
+  else if (l < 100) temp += "00" + String(static_cast<int>(l));
+  else if (l < 1000) temp += "0" + String(static_cast<int>(l));
+  else if (l < 10000) temp += String(static_cast<int>(l));
   else temp += "9999/";
-  if(r < 10) temp += "0" + String(static_cast<int>(r))/* + ";"*/;
-  else if (r < 100)  temp += String(static_cast<int>(r))/* + ";"*/;
+  if(r < 10) temp += "0" + String(static_cast<int>(r));
+  else if (r < 100)  temp += String(static_cast<int>(r));
 
   return temp;
 }
@@ -186,6 +183,4 @@ void requestEvent() {
     Serial.print(packet1[i]);
   }
   Serial.println();
-  //Wire.write("hello"); // respond with message of 6 bytes
-  // as expected by master
 }

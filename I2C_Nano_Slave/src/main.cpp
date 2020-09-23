@@ -1,4 +1,4 @@
-// SLAVE
+// SLAVE board
 #include <Arduino.h>
 #include <Wire.h>
 #include <math.h>
@@ -13,7 +13,9 @@ struct packetData{
 };
 
 void requestEvent();
+// New format - sending data to function in the structure
 String structFormPacket(packetData d1);
+// Old version with sending data right to function, not in the structure format
 String formPacket(int id, float tempAir, float humAir, float tempGround, float humGround, float lightLevel);
 
 void setup() {
@@ -94,7 +96,7 @@ String structFormPacket(packetData d1){
 
   return temp;
 }
-// Old version with sending data right to function, not in the structure format
+
 String formPacket(int id, float tempAir, float humAir, float tempGround, float humGround, float lightLevel){
 
   String temp = "";

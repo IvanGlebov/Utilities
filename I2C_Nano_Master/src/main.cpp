@@ -1,6 +1,7 @@
 // MASTER
 #include <Arduino.h>
 #include <Wire.h>
+
 // Structure for packet variables saving
 struct packetData{
   int id;
@@ -28,7 +29,6 @@ void loop() {
     Serial.print(c);         // print the character
   }
   Serial.println();
-  // parsePackage(data1, arrivedData);
   parsePackage(data1, arrivedData);
   showPackage(data1);
   //Serial.println("Attempt to read data");
@@ -39,59 +39,57 @@ void parsePackage(packetData& d1, String arrData){
   String temp = "";
   
   // ID reading
-  //d1.id = static_cast<int>(arrData[0]) + static_cast<int>(arrData[1]);
   char tempChar[10];
-  tempChar[0] = arrData[0];
-  tempChar[1] = arrData[1];
-  
+  tempChar[0] = arrData[0]; tempChar[1] = arrData[1];
   d1.id = atof(tempChar);
-  temp = "";
 
   // Air temperature reading
-  temp = arrData[3] + arrData[4];
   tempChar[0] = arrData[3];
   tempChar[1] = arrData[4];
   d1.airTemp = atof(tempChar);
-  // temp = "";
   if(arrData[2] == '-') d1.airTemp = -d1.airTemp;
-  // temp = arrData[5] + arrData[6];
   tempChar[0] = arrData[5];
   tempChar[1] = arrData[6];
   d1.airTemp += atof(tempChar)/100;
-  // temp = "";
 
   // Air humidity reading
-  temp = arrData[7] + arrData[8] + arrData[9];
-  d1.airHum = temp.toFloat();
-  temp = "";
-  temp = arrData[10] + arrData[11];
-  d1.airHum += temp.toFloat()/100;
-  temp = "";
+  tempChar[0] = arrData[7];
+  tempChar[1] = arrData[8];
+  tempChar[2] = arrData[9];
+  d1.airHum = atof(tempChar);
+  tempChar[0] = arrData[10];
+  tempChar[1] = arrData[11];
+  tempChar[2] = '\0';
+  d1.airHum += atof(tempChar)/100;
 
   // Ground temperature reading
-  temp = arrData[13] + arrData[4];
-  d1.groundTemp = temp.toFloat();
-  temp = "";
+  tempChar[0] = arrData[13];
+  tempChar[1] = arrData[14];
+  d1.groundTemp = atof(tempChar);
   if(arrData[12] == '-') d1.groundTemp = -d1.groundTemp;
-  temp = arrData[15] + arrData[16];
-  d1.groundTemp += temp.toFloat()/100;
-  temp = "";
+  tempChar[0] = arrData[15];
+  tempChar[1] = arrData[16];
+  d1.groundTemp += atof(tempChar)/100;
 
   // Ground humidity reading
-  temp = arrData[17] + arrData[18] + arrData[19];
-  d1.groundHum = temp.toFloat();
-  temp = "";
-  temp = arrData[20] + arrData[21];
-  d1.groundHum += temp.toFloat()/100;
-  temp = "";
+  tempChar[0] = arrData[17];
+  tempChar[1] = arrData[18];
+  tempChar[2] = arrData[19];
+  d1.groundHum = atof(tempChar);
+  tempChar[2] = '\0';
+  tempChar[0] = arrData[20];
+  tempChar[1] = arrData[21];
+  d1.groundHum += atof(tempChar)/100;
 
   // Light level reading
-  temp = arrData[22] + arrData[23] + arrData[24] + arrData[25];
-  d1.lightLevel = temp.toFloat();
-  temp = "";
-  temp = arrData[26] + arrData[27];
-  d1.lightLevel += temp.toFloat()/100;
-  // return d1;
+  tempChar[0] = arrData[22];
+  tempChar[1] = arrData[23];
+  tempChar[2] = arrData[24];
+  d1.lightLevel = atof(tempChar);
+  tempChar[2] = '\0';
+  tempChar[0] = arrData[26];
+  tempChar[1] = arrData[27];
+  d1.lightLevel += atof(tempChar)/100;
 }
 void showPackage(packetData p1){
   Serial.println("/-----------PACKAGE-DATA-----------");

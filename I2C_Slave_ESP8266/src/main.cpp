@@ -20,7 +20,7 @@ String formPacket(int id, float tempAir, float humAir, float tempGround, float h
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin(4, 3, 8);          // int sda, int scl, uint8_t addres
+  Wire.begin(8);          // int sda, int scl, uint8_t addres
   //Wire.begin(8);              // join i2c bus with address #8
   Wire.onRequest(requestEvent); // register event
 }
@@ -172,7 +172,7 @@ String formPacket(int id, float tempAir, float humAir, float tempGround, float h
 // this function is registered as an event, see setup()
 void requestEvent() {
   // Switch to sensors bus
-  Wire.begin(2,1);
+  // Wire.begin(2,1);
   packetData data1;
   data1.airHum = 11.2;
   data1.airTemp = 24.3;
@@ -180,9 +180,11 @@ void requestEvent() {
   data1.groundTemp = 23.8;
   data1.id = 1.0;
   data1.lightLevel = 1297.45;
-  String packet1 = structFormPacket(data1);
+  //String packet1 = structFormPacket(data1);
+  String packet1;
+  packet1 = formPacket(1, 24.3, 11.2, 23.8, 45.2, 1297.45);
   // Switch back to master-slave bus and send data back
-  Wire.begin(2,1,8);
+  // Wire.begin(2,1,8);
   int len = 28;
   for(int i=0; i < len; i++){
     Wire.write(packet1[i]);

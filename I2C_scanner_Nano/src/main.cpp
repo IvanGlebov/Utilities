@@ -1,14 +1,24 @@
 #include <Arduino.h>
 #include <Wire.h>
- 
+#define localBus 3
+#define masterBus 4
+
+
 void setup(){
     Wire.begin();   
     Serial.begin(9600);
     while (!Serial);
-    Serial.println("\nI2C Scanner");
+    Serial.println("\nI2C Scanner"); 
+
+    pinMode(localBus, OUTPUT);
+    pinMode(masterBus, OUTPUT);
+    digitalWrite(localBus, HIGH);
+    digitalWrite(masterBus, HIGH);
 } 
  
 void loop(){
+    digitalWrite(localBus, HIGH);
+    digitalWrite(masterBus, LOW);
     byte error, address;
     int nDevices;
  

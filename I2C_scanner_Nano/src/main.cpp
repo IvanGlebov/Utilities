@@ -2,7 +2,7 @@
 #include <Wire.h>
 #define localBus 3
 #define masterBus 4
-
+// 0x40, 0x41, 0x44
 
 void setup(){
     Wire.begin();   
@@ -18,7 +18,7 @@ void setup(){
  
 void loop(){
     digitalWrite(localBus, HIGH);
-    digitalWrite(masterBus, LOW);
+    digitalWrite(masterBus, HIGH);
     byte error, address;
     int nDevices;
  

@@ -1,7 +1,17 @@
 // SLAVE board
-#include <Arduino.h>
-#include <Wire.h>
-#include <math.h>
+#include <Arduino.h> // Main library
+#include <Wire.h> // For all I2C sensors and I2C bus to master
+#include <BH1750.h> // For BH1750 digital light sensor
+#include <SPI.h> //
+#include <Adafruit_Sensor.h> // For INA219 sensor libraries
+#include <Adafruit_INA219.h>
+#include <WEMOS_SHT3X.h> // For SHT30 digital temp and humidity sensor
+#include <math.h> // For using atof()
+
+#define sensorsBus 3
+#define masterBus 4
+
+
 // Structure for packet variables saving
 struct packetData{
   int id;
@@ -11,6 +21,37 @@ struct packetData{
   float groundHum;
   float lightLevel;
 };
+
+// Structure for packet from INA sensors
+struct inaPack{
+  float shuntvoltage = 0;
+  float busvoltage = 0;
+  float current_mA = 0;
+  float loadvoltage = 0;
+  float power_mW = 0;
+};
+
+// BH1750 light sensor config
+BH1750 lightSensor;
+float getLight();
+
+// TH-12 sensor block
+// INA219 sensors
+Adafruit_INA219 ina219_h(0x40);
+Adafruit_INA219 ina219_t(0x41);
+float getGroundTemp();
+float getGroundHum();
+float mapFloat(float x, float in_min, float in_max, float out_min, float out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+// SHT30 sensor
+SHT3X sht30(0x44);
+// Function recieve array of 2 elements and fill it
+void getSHT(float *);
+
+
 
 void requestEvent();
 // New format - sending data to function in the structure

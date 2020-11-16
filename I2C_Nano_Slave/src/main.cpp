@@ -10,7 +10,7 @@
 
 #define sensorsBus 3
 #define masterBus 4
-
+#define debug true
 
 // Structure for packet variables saving
 struct packetData{
@@ -30,6 +30,8 @@ struct inaPack{
   float loadvoltage = 0;
   float power_mW = 0;
 };
+Adafruit_INA219 ina219_h(0x40);
+Adafruit_INA219 ina219_t(0x41);
 
 // BH1750 light sensor config
 BH1750 lightSensor;
@@ -37,8 +39,8 @@ float getLight();
 
 // TH-12 sensor block
 // INA219 sensors
-Adafruit_INA219 ina219_h(0x40);
-Adafruit_INA219 ina219_t(0x41);
+// Adafruit_INA219 ina219_h(0x40);
+// Adafruit_INA219 ina219_t(0x41);
 float getGroundTemp();
 float getGroundHum();
 float mapFloat(float x, float in_min, float in_max, float out_min, float out_max)
@@ -49,7 +51,7 @@ float mapFloat(float x, float in_min, float in_max, float out_min, float out_max
 // SHT30 sensor
 SHT3X sht30(0x44);
 // Function recieve array of 2 elements and fill it
-void getSHT(float *);
+// void getSHT(float *);
 
 
 
@@ -62,6 +64,20 @@ String formPacket(int id, float tempAir, float humAir, float tempGround, float h
 void setup() {
   Serial.begin(9600);
   Wire.begin(8);                // join i2c bus with address #8
+  digitalWrite(sensorsBus,HIGH);
+  digitalWrite(masterBus, HIGH);
+
+
+  lightSensor.begin(BH1750::ONE_TIME_HIGH_RES_MODE);
+  if (! ina219_t.begin()) {
+    if (debug) Serial.println("Failed to find INA219_1 chip");
+  }
+  if (! ina219_h.begin()){
+    if (debug) Serial.println("Failed to find INA219_2 chip");
+  }
+  
+
+
   Wire.onRequest(requestEvent); // register event
 }
 
@@ -211,6 +227,7 @@ String formPacket(int id, float tempAir, float humAir, float tempGround, float h
 // function that executes whenever data is requested by master
 // this function is registered as an event, see setup()
 void requestEvent() {
+  delay(99);
   packetData data1;
   data1.airHum = 11.2;
   data1.airTemp = 24.3;
